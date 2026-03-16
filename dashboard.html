@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+</head>
+
+<body>
+
+<h2>Available Auctions</h2>
+
+<div id="auctionList"></div>
+
+<br>
+
+<a href="createAuction.html">Create Auction</a>
+<br><br>
+
+<a href="auction.html">Place Bid</a>
+
+<script>
+
+fetch("/auction/all")
+.then(res => res.json())
+.then(data => {
+
+let html = "";
+
+if(data.length === 0){
+html = "<p>No auctions available</p>";
+}
+
+data.forEach(a => {
+
+html += `
+<div style="border:1px solid black;padding:10px;margin:10px;">
+<h3>${a.itemName}</h3>
+<p>Current Price: ${a.currentPrice}</p>
+<p>Auction ID: ${a._id}</p>
+</div>
+`;
+
+});
+
+document.getElementById("auctionList").innerHTML = html;
+
+});
+
+</script>
+
+</body>
+</html>
